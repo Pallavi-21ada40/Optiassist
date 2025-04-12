@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Live Object Detection</title>
+    <meta http-equiv="refresh" content="5"> <!-- Auto-refresh page -->
+    <style>
+        body { text-align: center; font-family: Arial; background: #f4f4f4; }
+        h2 { color: #333; }
+        #detected { margin-top: 10px; font-size: 20px; color: green; }
+        img { border: 2px solid #000; }
+    </style>
+</head>
+<body>
+    <h2>🔍 Live Object Detection with Audio Feedback</h2>
+    <img src="{{ url_for('video_feed') }}" width="640" height="480">
+    <div id="detected">Loading...</div>
+
+    <script>
+        function fetchDetected() {
+            fetch('/results')
+                .then(res => res.json())
+                .then(data => {
+                    document.getElementById("detected").innerText = "Detected: " + data.detected.join(", ");
+                });
+        }
+        setInterval(fetchDetected, 3000);
+        fetchDetected();
+    </script>
+</body>
+</html>

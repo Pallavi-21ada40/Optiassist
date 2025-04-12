@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{{ title }}</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #1c1c1c;
+            color: #fff;
+            text-align: center;
+            padding: 20px;
+        }
+        img {
+            border: 5px solid #00ffcc;
+            max-width: 90%;
+            height: auto;
+            margin-top: 20px;
+        }
+        .btn {
+            background-color: #00ffcc;
+            color: #000;
+            padding: 10px 20px;
+            border: none;
+            font-weight: bold;
+            border-radius: 5px;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+    <h1>Detected Objects</h1>
+    <p>{{ detected }}</p>
+    <img src="{{ url_for('static', filename='output.jpg') }}" alt="Detection Result">
+    <br><br>
+    <a href="{{ url_for('dashboard') }}" class="btn">Back to Dashboard</a>
+</body>
+</html>

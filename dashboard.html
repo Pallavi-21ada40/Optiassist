@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="text-center content-box">
+    <h2>Object Detection Dashboard</h2>
+    <img id="videoFeed" src="{{ url_for('video_feed') }}" width="640" height="480" style="border:2px solid black;"><br><br>
+
+    <button class="btn btn-danger btn-lg" onclick="stopCamera()">Stop Detection</button>
+
+    <script>
+        let lastSpoken = "";
+
+        function speak(text) {
+            const utter = new SpeechSynthesisUtterance(text);
+            speechSynthesis.speak(utter);
+        }
+
+        function checkLabel() {
+            fetch("/label")
+                .then(response => response.json())
+                .then(data => {
+                    if (data.label && data.label !== lastSpoken) {
+                        lastSpoken = data.label;
+                        speak(data.label);
+                    }
+                });
+        }
+
+        function stopCamera() {
+            fetch("/stop")
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById("videoFeed").src = "";
+                    alert("Detection Stopped.");
+                });
+        }
+
+        setInterval(checkLabel, 2000); // Check label every 2 sec
+    </script>
+</div>
+{% endblock %}
